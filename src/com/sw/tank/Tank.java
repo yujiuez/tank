@@ -47,11 +47,12 @@ public class Tank {
         this.dir = dir;
     }
 
-    public void paint(Graphics g) {
+    public void paint(Graphics g){
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
         g.fillRect(x,y,50,50);
-
-        move();
-
+        g.setColor(c);
+//        move();
     }
 
     private void move() {
