@@ -7,12 +7,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class TankFrame extends Frame {
-    int x=200;
-    int y=200;
-    Dir dir =Dir.DOWN;
-    private final int SPEED = 10;
 
-
+    Tank myTank = new Tank(200,200,Dir.DOWN);
+    Bullent b = new Bullent(300,400,Dir.DOWN);
     public TankFrame(){
         setSize(800,800);
         setResizable(false);
@@ -31,25 +28,11 @@ public class TankFrame extends Frame {
     }
 
     @Override
-    public void paint(Graphics g) {
-        g.fillRect(x,y,50,50);
-        switch (dir){
-            case LEFT:
-                x-=SPEED;
-                break;
-            case RIGHT:
-                x+=SPEED;
-                break;
-            case UP:
-                y-=SPEED;
-                break;
-            case DOWN:
-                y+=SPEED;
-                break;
-            default:
-                break;
-        }
+    public void paint(Graphics g){
+        myTank.paint(g);
+        b.paint(g);
     }
+
     class MyKeyListener extends KeyAdapter{
         boolean BL = false;
         boolean BU = false;
@@ -101,11 +84,14 @@ public class TankFrame extends Frame {
 
         }
         private void setMainTankDir() {
-            if(BL) dir = Dir.LEFT;
-            if(BU) dir = Dir.UP;
-            if(BR) dir = Dir.RIGHT;
-            if(BD) dir = Dir.DOWN;
-
+            if(!BL && !BD && !BR && !BU) myTank.setMoving(false);
+            else{
+                myTank.setMoving(true);
+                if(BL) myTank.setDir(Dir.LEFT);
+                if(BU) myTank.setDir(Dir.UP);
+                if(BR) myTank.setDir(Dir.RIGHT);
+                if(BD) myTank.setDir(Dir.DOWN);
+            }
 
         }
 
