@@ -5,15 +5,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200,200,Dir.DOWN);
-    Bullent b = new Bullent(300,400,Dir.DOWN);
+    Tank myTank = new Tank(200,200,Dir.DOWN,this);
+    List<Bullent> bullents = new ArrayList<>();
+    Bullent b = new Bullent(300,300,Dir.DOWN);
     static final int GAME_HEIGHT = 800;
     static final int GAME_WIDTH = 800;
     public TankFrame(){
-        setSize(GAME_HEIGHT,GAME_WIDTH);
+        setSize(GAME_WIDTH,GAME_HEIGHT);
         setResizable(false);
         setTitle("tank war");
         setVisible(true);
@@ -44,31 +47,37 @@ public class TankFrame extends Frame {
     }
     @Override
     public void paint(Graphics g){
+        Color c = g.getColor();
+        g.setColor(Color.white);
+        g.drawString("子弹的数量：" + bullents.size(),10,60);
+        g.setColor(c);
         myTank.paint(g);
-        b.paint(g);
+        for(Bullent b : bullents){
+            b.paint(g);
+        }
     }
 
     class MyKeyListener extends KeyAdapter{
-        boolean BL = false;
-        boolean BU = false;
-        boolean BR = false;
-        boolean BD = false;
+        boolean bL = false;
+        boolean bU = false;
+        boolean bR = false;
+        boolean bD = false;
 
         @Override
         public void keyPressed(KeyEvent e) {
             int key =e.getKeyCode();
             switch (key){
                 case KeyEvent.VK_LEFT:
-                    BL = true;
+                    bL = true;
                     break;
                 case KeyEvent.VK_UP:
-                    BU = true;
+                    bU = true;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    BR= true;
+                    bR = true;
                     break;
                 case KeyEvent.VK_DOWN:
-                    BD= true;
+                    bD = true;
                     break;
                 default:
                     break;
@@ -82,30 +91,33 @@ public class TankFrame extends Frame {
            int key =e.getKeyCode();
             switch (key){
                 case KeyEvent.VK_LEFT:
-                    BL = false;
+                    bL = false;
                     break;
                 case KeyEvent.VK_UP:
-                    BU = false;
+                    bU = false;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    BR= false;
+                    bR= false;
                     break;
                 case KeyEvent.VK_DOWN:
-                    BD= false;
+                    bD= false;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
                     break;
                 default:
                     break;
             }
-
+            setMainTankDir();
         }
         private void setMainTankDir() {
-            if(!BL && !BD && !BR && !BU) myTank.setMoving(false);
+            if(!bL && !bD && !bR && !bU) {myTank.setMoving(false);}
             else{
                 myTank.setMoving(true);
-                if(BL) myTank.setDir(Dir.LEFT);
-                if(BU) myTank.setDir(Dir.UP);
-                if(BR) myTank.setDir(Dir.RIGHT);
-                if(BD) myTank.setDir(Dir.DOWN);
+                if(bL) myTank.setDir(Dir.LEFT);
+                if(bU) myTank.setDir(Dir.UP);
+                if(bR) myTank.setDir(Dir.RIGHT);
+                if(bD) myTank.setDir(Dir.DOWN);
             }
 
         }
