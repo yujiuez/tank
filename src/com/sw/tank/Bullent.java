@@ -8,7 +8,8 @@ public class Bullent {
      private static int WIDTH = 20;
      private static int HEIGHT = 20;
      private Dir dir;
-
+     private Boolean live = true;
+     TankFrame tf = null;
     public int getX() {
         return x;
     }
@@ -48,13 +49,17 @@ public class Bullent {
 //         this.y =y;
 //         this.dir = dir;
 //     }
-public Bullent(int x, int y, Dir dir) {
+public Bullent(int x, int y, Dir dir,TankFrame tf) {
     this.x = x;
     this.y = y;
     this.dir = dir;
+    this.tf = tf;
 }
 
      public void paint(Graphics g){
+        if(! live){
+            tf.bullents.remove(this);
+        }
          Color c = g.getColor();
          g.setColor(Color.RED);
          g.fillOval(x,y,WIDTH,HEIGHT);
@@ -78,6 +83,9 @@ public Bullent(int x, int y, Dir dir) {
                 break;
             default:
                 break;
+        }
+        if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT){
+            live = false;
         }
     }
 
