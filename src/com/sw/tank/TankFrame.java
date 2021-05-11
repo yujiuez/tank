@@ -65,6 +65,13 @@ public class TankFrame extends Frame {
             tanks.get(i).paint(g);
         }
 
+        for(int i=0;i<bullents.size();i++){
+            for(int j=0;j<tanks.size();j++){
+                bullents.get(i).collideWith(tanks.get(j));
+            }
+
+        }
+
 //        for(Iterator<Bullent> it = bullents.iterator();it.hasNext();){
 //            Bullent b = it.next();
 //            if(!b.live) it.remove();

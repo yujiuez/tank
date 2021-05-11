@@ -8,7 +8,7 @@ public class Bullent {
      public  static int WIDTH = ResourceMgr.bulletD.getWidth();
      public  static int HEIGHT = ResourceMgr.bulletD.getHeight();
      private Dir dir;
-     private Boolean live = true;
+     private Boolean living = true;
      TankFrame tf = null;
     public int getX() {
         return x;
@@ -57,7 +57,7 @@ public Bullent(int x, int y, Dir dir,TankFrame tf) {
 }
 
      public void paint(Graphics g){
-        if(! live){
+        if(! living){
             tf.bullents.remove(this);
         }
             switch(dir){
@@ -98,9 +98,22 @@ public Bullent(int x, int y, Dir dir,TankFrame tf) {
                 break;
         }
         if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT){
-            live = false;
+            living = false;
         }
     }
 
 
+    public void collideWith(Tank tank) {
+        Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
+        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),tank.WIDTH,tank.HEIGHT);
+        if(rect1.intersects(rect2)){
+            tank.die();
+            this.die();
+
+        }
+    }
+
+    private void die() {
+        living =false;
+    }
 }
