@@ -11,7 +11,7 @@ public class Main {
 
       //初始化敌方坦克
       for(int i=0;i<5;i++){
-          tf.tanks.add(new Tank(50+ i*30,200,Dir.DOWN,tf));
+          tf.tanks.add(new Tank(50+ i*30,200,Dir.DOWN,tf,Group.BAD));
       }
       while(true){
           Thread.sleep(50);

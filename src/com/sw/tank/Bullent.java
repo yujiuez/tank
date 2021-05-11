@@ -9,6 +9,7 @@ public class Bullent {
      public  static int HEIGHT = ResourceMgr.bulletD.getHeight();
      private Dir dir;
      private Boolean living = true;
+     private Group group = Group.BAD;
      TankFrame tf = null;
     public int getX() {
         return x;
@@ -44,16 +45,25 @@ public class Bullent {
         Bullent.WIDTH = WIDTH;
     }
 
-//    public Bullent(int x, int y, Dir Dir){
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    //    public Bullent(int x, int y, Dir Dir){
 //         this.x = x;
 //         this.y =y;
 //         this.dir = dir;
 //     }
-public Bullent(int x, int y, Dir dir,TankFrame tf) {
+public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
     this.x = x;
     this.y = y;
     this.dir = dir;
     this.tf = tf;
+    this.group = group;
 }
 
      public void paint(Graphics g){
@@ -104,6 +114,8 @@ public Bullent(int x, int y, Dir dir,TankFrame tf) {
 
 
     public void collideWith(Tank tank) {
+        if(this.group == tank.getGroup()) return ;
+        //TODO:一个rect来记录子弹的位置
         Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
         Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),tank.WIDTH,tank.HEIGHT);
         if(rect1.intersects(rect2)){
