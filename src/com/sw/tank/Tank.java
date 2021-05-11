@@ -8,6 +8,8 @@ public class Tank {
     private static final int SPEED = 5;
     private boolean moving = false;
     private TankFrame tf = null;
+    public static int WIDTH = ResourceMgr.tankD.getWidth();
+    public static int HEIGHT = ResourceMgr.tankD.getHeight();
 
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -91,7 +93,9 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullents.add(new Bullent(this.x,this.y,this.dir,tf));
+        int bx = this.x+ Tank.WIDTH/2 - Bullent.WIDTH/2;
+        int by =this.y +Tank.HEIGHT/2 - Bullent.HEIGHT/2;
+        tf.bullents.add(new Bullent(bx,by,this.dir,tf));
 
     }
 }
