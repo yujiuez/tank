@@ -110,7 +110,7 @@ public class Tank {
     public void fire() {
         int bx = this.x+ Tank.WIDTH/2 - Bullent.WIDTH/2;
         int by =this.y +Tank.HEIGHT/2 - Bullent.HEIGHT/2;
-        tf.bullents.add(new Bullent(bx,by,this.dir,tf,this.group));
+        tf.bullets.add(new Bullent(bx,by,this.dir,tf,this.group));
 
     }
 

@@ -68,7 +68,7 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
 
      public void paint(Graphics g){
         if(! living){
-            tf.bullents.remove(this);
+            tf.bullets.remove(this);
         }
             switch(dir){
                 case LEFT:
@@ -121,7 +121,7 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
         if(rect1.intersects(rect2)){
             tank.die();
             this.die();
-
+            tf.explodes.add(new Explode(x,y,tf));
         }
     }
 

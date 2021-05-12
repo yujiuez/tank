@@ -6,15 +6,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class TankFrame extends Frame {
 
     Tank myTank = new Tank(330, 300, Dir.DOWN, this,Group.GOOD);
-    List<Bullent> bullents = new ArrayList<>();
+    List<Bullent> bullets = new ArrayList<>();
     List<Tank> tanks = new ArrayList<>();
+    List<Explode> explodes = new ArrayList<>();
     Bullent b = new Bullent(300, 300, Dir.DOWN, this,Group.GOOD);
+    Explode e = new Explode(100,100,this);
     static final int GAME_HEIGHT = 800;
     static final int GAME_WIDTH = 800;
 
@@ -55,21 +56,26 @@ public class TankFrame extends Frame {
     public void paint(Graphics g) {
         Color c = g.getColor();
         g.setColor(Color.white);
-        g.drawString("子弹的数量：" + bullents.size(), 10, 60);
+        g.drawString("子弹的数量：" + bullets.size(), 10, 60);
         g.drawString("坦克的数量：" + tanks.size(), 10, 70);
+        g.drawString("爆炸的数量：" + explodes.size(), 10, 100);
         g.setColor(c);
         myTank.paint(g);
-        for (int i = 0; i < bullents.size(); i++) {
-            bullents.get(i).paint(g);
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
         }
         for (int i = 0; i < tanks.size(); i++) {
             tanks.get(i).paint(g);
         }
-
-        for(int i=0;i<bullents.size();i++){
+        for (int i = 0; i < explodes.size(); i++) {
+            explodes.get(i).paint(g);
+        }
+        //collision detect
+        for(int i = 0; i< bullets.size(); i++){
             for(int j=0;j<tanks.size();j++){
-                bullents.get(i).collideWith(tanks.get(j));
+                bullets.get(i).collideWith(tanks.get(j));
             }
+//            e.paint(g);
 
         }
 
