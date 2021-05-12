@@ -129,6 +129,8 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
     public void collideWith(Tank tank) {
         if(this.group == tank.getGroup()) return ;
         //TODO:一个rect来记录子弹的位置
+//        Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
+//        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),tank.WIDTH,tank.HEIGHT);
         if(rect.intersects(tank.rect)){
             tank.die();
             this.die();

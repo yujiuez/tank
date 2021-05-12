@@ -67,6 +67,7 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
     }
 
     public void paint(Graphics g){
@@ -109,7 +110,10 @@ public class Tank {
                     break;
                 default:
                     break;
+
             }
+            if(this.group == Group.GOOD) new  Thread(()->new Audio("audio/tank_move.wav").play()).start();
+
             if(this.group == Group.BAD && random.nextInt(100) > 95)
                 this.fire();
             if(this.group == Group.BAD && random.nextInt(100) > 95)
