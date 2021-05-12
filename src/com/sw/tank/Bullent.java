@@ -7,6 +7,8 @@ public class Bullent {
      private int x,y;
      public  static int WIDTH = ResourceMgr.bulletD.getWidth();
      public  static int HEIGHT = ResourceMgr.bulletD.getHeight();
+
+     Rectangle rect = new Rectangle();
      private Dir dir;
      private Boolean living = true;
      private Group group = Group.BAD;
@@ -63,7 +65,13 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
     this.y = y;
     this.dir = dir;
     this.tf = tf;
+    rect.x = this.x;
+    rect.y = this.y;
+    rect.width = WIDTH;
+    rect.height = HEIGHT;
     this.group = group;
+
+
 }
 
      public void paint(Graphics g){
@@ -107,6 +115,11 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
             default:
                 break;
         }
+
+        //update rect
+        rect.x = this.x;
+        rect.y = this.y;
+
         if(x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT){
             living = false;
         }
@@ -116,9 +129,7 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
     public void collideWith(Tank tank) {
         if(this.group == tank.getGroup()) return ;
         //TODO:一个rect来记录子弹的位置
-        Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),tank.WIDTH,tank.HEIGHT);
-        if(rect1.intersects(rect2)){
+        if(rect.intersects(tank.rect)){
             tank.die();
             this.die();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;

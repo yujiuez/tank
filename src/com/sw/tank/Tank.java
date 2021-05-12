@@ -10,6 +10,7 @@ public class Tank {
     private boolean moving = true;
     private TankFrame tf = null;
     private Group group = Group.BAD;
+    Rectangle rect = new Rectangle();
     public static int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
 
@@ -62,6 +63,10 @@ public class Tank {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public void paint(Graphics g){
@@ -111,6 +116,9 @@ public class Tank {
                 randomDir();
 
             boundCheck();
+            //update rect
+            rect.x = this.x;
+            rect.y = this.y;
         }
 
 
