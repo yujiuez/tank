@@ -39,12 +39,12 @@ public class Explode {
     public void paint(Graphics g){
 
         g.drawImage(ResourceMgr.exploades[step++],x,y,null);
-        brokenSound();
+//        brokenSound();
         if(step >=ResourceMgr.exploades.length)
             tf.explodes.remove(this);
     }
-    public void brokenSound(){
-        for(int i =0;i < 6;i++)
-            new  Thread(()->new Audio("audio/explode.wav").play()).start();
-    }
+//    public void brokenSound(){
+//        for(int i =0;i < 6;i++)
+//            new  Thread(()->new Audio("audio/explode.wav").play()).start();
+//    }
 }

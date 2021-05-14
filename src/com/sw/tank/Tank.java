@@ -1,15 +1,17 @@
 package com.sw.tank;
 
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class Tank {
-    private int x,y;
-    private Dir dir =Dir.DOWN;
+    int x,y;
+    Dir dir =Dir.DOWN;
     private static final int SPEED = 5;
     private boolean moving = true;
-    private TankFrame tf = null;
-    private Group group = Group.BAD;
+    TankFrame tf = null;
+    Group group = Group.BAD;
+    FireStrategy fs;
     Rectangle rect = new Rectangle();
     public static int WIDTH = ResourceMgr.goodTankU.getWidth();
     public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -67,6 +69,26 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+        if(group == Group.GOOD){
+            String goodFSName = (String)PropertyMgr.get("goodFs");
+
+                //利用反射机制将对象从内存load到该位置
+            try {
+                fs = (FireStrategy)Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+        else fs = new DefaultFireStrategy();
 
     }
 
@@ -141,10 +163,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bx = this.x+ Tank.WIDTH/2 - Bullent.WIDTH/2;
-        int by =this.y +Tank.HEIGHT/2 - Bullent.HEIGHT/2;
-        tf.bullets.add(new Bullent(bx,by,this.dir,tf,this.group));
-
+        fs.fire(this);
     }
 
     public void die() {

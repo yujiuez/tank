@@ -69,6 +69,7 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
     rect.y = this.y;
     rect.width = WIDTH;
     rect.height = HEIGHT;
+    tf.bullets.add(this);
     this.group = group;
 
 
@@ -134,6 +135,7 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
         if(rect.intersects(tank.rect)){
             tank.die();
             this.die();
+            new  Thread(()->new Audio("audio/explode.wav").play()).start();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;
             tf.explodes.add(new Explode(eX,eY,tf));
