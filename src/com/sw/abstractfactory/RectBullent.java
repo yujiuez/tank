@@ -1,11 +1,10 @@
-package com.sw.tank;
+package com.sw.abstractfactory;
 
-import com.sw.abstractfactory.BaseBullet;
-import com.sw.abstractfactory.BaseTank;
+import com.sw.tank.*;
 
 import java.awt.*;
 
-public class Bullent extends BaseBullet {
+public class RectBullent extends BaseBullet {
      private static final int SPEED = 10;
      private int x,y;
      public  static int WIDTH = ResourceMgr.bulletD.getWidth();
@@ -47,7 +46,7 @@ public class Bullent extends BaseBullet {
     }
 
     public static void setWIDTH(int WIDTH) {
-        Bullent.WIDTH = WIDTH;
+        RectBullent.WIDTH = WIDTH;
     }
 
     public Group getGroup() {
@@ -58,7 +57,7 @@ public class Bullent extends BaseBullet {
         this.group = group;
     }
 
-public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
+public RectBullent(int x, int y, Dir dir, TankFrame tf, Group group) {
     this.x = x;
     this.y = y;
     this.dir = dir;
@@ -77,26 +76,14 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
         if(! living){
             tf.bullets.remove(this);
         }
-            switch(dir){
-                case LEFT:
-                    g.drawImage(ResourceMgr.bulletL,x,y,null);
-                    break;
-                case RIGHT:
-                    g.drawImage(ResourceMgr.bulletR,x,y,null);
-                    break;
-                case UP:
-                    g.drawImage(ResourceMgr.bulletU,x,y,null);
-                    break;
-                case DOWN:
-                    g.drawImage(ResourceMgr.bulletD,x,y,null);
-                    break;
-            }
-
+        Color c = g.getColor();
+        g.setColor(group == Group.GOOD ?Color.RED:Color.white.YELLOW);
+        g.fillRect(x,y,20,20);
+        g.setColor(c);
         move();
 
 
      }
-
 
     private void move() {
         switch (dir){
@@ -124,15 +111,14 @@ public Bullent(int x, int y, Dir dir,TankFrame tf,Group group) {
             living = false;
         }
     }
-    @Override
+
+
     public void collideWith(BaseTank tank) {
         if(this.group == tank.getGroup()) return ;
         //TODO:一个rect来记录子弹的位置
-//        Rectangle rect1 = new Rectangle(this.x,this.y,WIDTH,HEIGHT);
-//        Rectangle rect2 = new Rectangle(tank.getX(),tank.getY(),tank.WIDTH,tank.HEIGHT);
         if(rect.intersects(tank.rect)){
-            tank.die();
             this.die();
+            tank.die();
             new  Thread(()->new Audio("audio/explode.wav").play()).start();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
             int eY = tank.getY() + Tank.HEIGHT/2 - Explode.HEIGHT/2;

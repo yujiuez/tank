@@ -1,12 +1,12 @@
-package com.sw.tank;
+package com.sw.abstractfactory;
 
-import com.sw.abstractfactory.BaseTank;
+import com.sw.tank.*;
 
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
-public class Tank extends BaseTank {
+public class RectTank extends BaseTank {
     int x,y;
     Dir dir =Dir.DOWN;
     private static final int SPEED = 5;
@@ -51,15 +51,15 @@ public class Tank extends BaseTank {
         this.dir = dir;
     }
 
-//    public Group getGroup() {
-//        return group;
-//    }
+    public Group getGroup() {
+        return group;
+    }
 
-//    public void setGroup(Group group) {
-//        this.group = group;
-//    }
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
-    public Tank(int x, int y, Dir dir, TankFrame tf, Group group){
+    public RectTank(int x, int y, Dir dir, TankFrame tf, Group group){
         super();
         this.x = x;
         this.y = y;
@@ -96,22 +96,10 @@ public class Tank extends BaseTank {
     public void paint(Graphics g){
         if(! living) tf.tanks.remove(this);
 
-
-
-        switch(dir){
-            case LEFT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL,x,y,null);
-                break;
-            case RIGHT:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR,x,y,null);
-                break;
-            case UP:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU,x,y,null);
-                break;
-            case DOWN:
-                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD,x,y,null);
-                break;
-        }
+        Color c =g.getColor();
+        g.setColor(group==Group.GOOD?Color.RED:Color.YELLOW);
+        g.fillRect(x,y,40,40);
+        g.setColor(c);
         move();
     }
 
@@ -165,8 +153,8 @@ public class Tank extends BaseTank {
 
     public void fire() {
 //        fs.fire(this);
-        int bx = this.x+ Tank.WIDTH/2 - Bullent.WIDTH/2;
-        int by =this.y +Tank.HEIGHT/2 - Bullent.HEIGHT/2;
+        int bx = this.x+ RectTank.WIDTH/2 - Bullent.WIDTH/2;
+        int by =this.y + RectTank.HEIGHT/2 - Bullent.HEIGHT/2;
         Dir[] dirs = Dir.values();
         for(Dir dir :dirs){
             this.tf.gf.createBullet(bx,by,dir,this.tf,this.group);

@@ -1,5 +1,7 @@
 package com.sw.tank;
 
+import com.sw.abstractfactory.*;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -11,14 +13,14 @@ import java.util.List;
 public class TankFrame extends Frame {
 
     Tank myTank = new Tank(330, 300, Dir.DOWN, this,Group.GOOD);
-    List<Bullent> bullets = new ArrayList<>();
-    List<Tank> tanks = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    public  List<BaseBullet> bullets = new ArrayList<>();
+    public  List<BaseTank> tanks = new ArrayList<>();
+    public  List<BaseExplode> explodes = new ArrayList<>();
     Bullent b = new Bullent(300, 300, Dir.DOWN, this,Group.GOOD);
     Explode e = new Explode(100,100,this);
-    static final int GAME_HEIGHT = 800;
-    static final int GAME_WIDTH = 800;
-
+    public static final int GAME_HEIGHT = 800;
+    public static final int GAME_WIDTH = 800;
+    public GameFactory gf = new DefaultFactory();
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
         setResizable(false);

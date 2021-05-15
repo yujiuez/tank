@@ -1,5 +1,7 @@
 package com.sw.tank;
 
+import com.sw.abstractfactory.BaseTank;
+
 public interface FireStrategy {
-    void fire(Tank t);
+   public void fire(Tank t);
 }
